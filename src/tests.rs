@@ -60,6 +60,15 @@ fn tempesta_add_overwrite_move_remove() {
     .success()
     .stdout(output_move);
 
+  //list
+  let output_list = "move/test :: https://test.local\n";
+  Command::cargo_bin("tempesta")
+    .unwrap()
+    .args(["list"])
+    .assert()
+    .success()
+    .stdout(output_list);
+
   // remove (removing the last entry in the bookmark-store-test removes it completely)
   let output_remove = "Bookmark removed successfully as move/test\n";
   Command::cargo_bin("tempesta")
@@ -69,4 +78,6 @@ fn tempesta_add_overwrite_move_remove() {
     .success()
     .stdout(output_remove);
   // TODO: cleanup ~/.config/tempesta/tempesta.toml
+
+  //TODO: if panick remove files
 }
