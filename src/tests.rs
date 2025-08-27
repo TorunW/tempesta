@@ -31,31 +31,31 @@ fn tempesta_add_overwrite_move_remove() {
   let home = test_env();
 
   // add
-  let output_add = "Bookmark file stored at HOME/.bookmark-store-test/test.toml\nBookmark added successfully as test\n"
+  let output_add = "Bookmark file stored at HOME/.bookmark-store-test/bookmark-title-test.toml\nBookmark added successfully as bookmark-title-test\n"
         .replace("HOME", home.to_str().expect("Unable to convert HOME dir to str"));
   Command::cargo_bin("tempesta")
     .unwrap()
-    .args(["add", "test", "https://test.local", "test"])
+    .args(["add", "bookmark-title-test", "https://url-test.local", "test-tag"])
     .assert()
     .success()
     .stdout(output_add);
 
   // add (again but this time overwrite)
-  let output_add_overwrite = "Bookmark already exists at HOME/.bookmark-store-test/test.toml. Overwrite? (y/N): Overwriting file...\nBookmark file stored at HOME/.bookmark-store-test/test.toml\nBookmark added successfully as test\n"
+  let output_add_overwrite = "Bookmark already exists at HOME/.bookmark-store-test/bookmark-title-test.toml. Overwrite? (y/N): Overwriting file...\nBookmark file stored at HOME/.bookmark-store-test/bookmark-title-test.toml\nBookmark added successfully as bookmark-title-test\n"
         .replace("HOME", home.to_str().expect("Unable to convert HOME dir to str"));
   Command::cargo_bin("tempesta")
     .unwrap()
-    .args(["add", "test", "https://test.local", "test"])
+    .args(["add", "bookmark-title-test", "https://test.local", "test-tag"])
     .write_stdin("y\n")
     .assert()
     .success()
     .stdout(output_add_overwrite);
 
   // move
-  let output_move = "Bookmark moved successfully from test to move/test\n";
+  let output_move = "Bookmark moved successfully from bookmark-title-test to move/test\n";
   Command::cargo_bin("tempesta")
     .unwrap()
-    .args(["move", "test", "move/test"])
+    .args(["move", "bookmark-title-test", "move/test"])
     .assert()
     .success()
     .stdout(output_move);
