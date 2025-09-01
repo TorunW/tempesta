@@ -35,7 +35,12 @@ fn tempesta_add_overwrite_move_remove() {
         .replace("HOME", home.to_str().expect("Unable to convert HOME dir to str"));
   Command::cargo_bin("tempesta")
     .unwrap()
-    .args(["add", "bookmark-title-test", "https://url-test.local", "test-tag"])
+    .args([
+      "add",
+      "bookmark-title-test",
+      "https://url-test.local",
+      "test-tag",
+    ])
     .assert()
     .success()
     .stdout(output_add);
@@ -45,14 +50,32 @@ fn tempesta_add_overwrite_move_remove() {
         .replace("HOME", home.to_str().expect("Unable to convert HOME dir to str"));
   Command::cargo_bin("tempesta")
     .unwrap()
-    .args(["add", "bookmark-title-test", "https://test.local", "test-tag"])
+    .args([
+      "add",
+      "bookmark-title-test",
+      "https://www.google.com/",
+      "test-tag",
+    ])
     .write_stdin("y\n")
     .assert()
     .success()
     .stdout(output_add_overwrite);
 
+  //open, should the output
+  let output_open = "Browser opened\n".replace(
+    "HOME",
+    home.to_str().expect("Unable to convert HOME dir to str"),
+  );
+  Command::cargo_bin("tempesta")
+    .unwrap()
+    .args(["open", "bookmark-title-test"])
+    .assert()
+    .success()
+    .stdout(output_open);
+
   // move
-  let output_move = "Bookmark moved successfully from bookmark-title-test to move/test\n";
+  let output_move =
+    "Bookmark moved successfully from bookmark-title-test to move/test\n";
   Command::cargo_bin("tempesta")
     .unwrap()
     .args(["move", "bookmark-title-test", "move/test"])
@@ -61,7 +84,7 @@ fn tempesta_add_overwrite_move_remove() {
     .stdout(output_move);
 
   //list
-  let output_list = "move/test :: https://test.local\n";
+  let output_list = "move/test :: https://www.google.com/\n";
   Command::cargo_bin("tempesta")
     .unwrap()
     .args(["list"])

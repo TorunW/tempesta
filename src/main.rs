@@ -400,6 +400,10 @@ fn open(args: Vec<String>) {
   let url = get_url(&relative_path);
   validate_url(&url);
   webbrowser::open(&url).panic_on_error("Failed to open browser");
+
+  if webbrowser::open(&url).is_ok() {
+    println!("Browser opened");
+  }
 }
 
 // Example function to extract the URL from the TOML file
