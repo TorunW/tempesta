@@ -62,10 +62,7 @@ fn tempesta_add_overwrite_move_remove() {
     .stdout(output_add_overwrite);
 
   //open, should the output
-  let output_open = "Browser opened\n".replace(
-    "HOME",
-    home.to_str().expect("Unable to convert HOME dir to str"),
-  );
+  let output_open = "Browser opened\n";
   Command::cargo_bin("tempesta")
     .unwrap()
     .args(["open", "bookmark-title-test"])
