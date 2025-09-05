@@ -61,6 +61,19 @@ fn tempesta_add_overwrite_move_remove() {
     .success()
     .stdout(output_add_overwrite);
 
+  //update, should the output
+  let output_update = "Bookmark file stored at /Users/davidnelvand/.bookmark-store-test/bookmark-title-test.toml\nBookmark updated successfully as bookmark-title-test\n";
+  Command::cargo_bin("tempesta")
+    .unwrap()
+    .args([
+      "update",
+      "bookmark-title-test",
+      "https://www.google.com/imghp?hl=en&ogbl",
+    ])
+    .assert()
+    .success()
+    .stdout(output_update);
+
   //open, should the output
   let output_open = "Browser opened\n";
   Command::cargo_bin("tempesta")
@@ -81,7 +94,7 @@ fn tempesta_add_overwrite_move_remove() {
     .stdout(output_move);
 
   //list
-  let output_list = "move/test :: https://www.google.com/\n";
+  let output_list = "move/test :: https://www.google.com/imghp?hl=en&ogbl\n";
   Command::cargo_bin("tempesta")
     .unwrap()
     .args(["list"])
