@@ -61,7 +61,7 @@ fn tempesta_add_overwrite_move_remove() {
     .success()
     .stdout(output_add_overwrite);
 
-  //update, should the output
+  //update
   let output_update = "Bookmark file stored at /Users/davidnelvand/.bookmark-store-test/bookmark-title-test.toml\nBookmark updated successfully as bookmark-title-test\n";
   Command::cargo_bin("tempesta")
     .unwrap()
@@ -74,7 +74,7 @@ fn tempesta_add_overwrite_move_remove() {
     .success()
     .stdout(output_update);
 
-  //open, should the output
+  //open
   let output_open = "Browser opened\n";
   Command::cargo_bin("tempesta")
     .unwrap()
